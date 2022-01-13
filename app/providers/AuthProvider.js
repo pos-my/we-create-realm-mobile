@@ -12,50 +12,29 @@ const AuthContext = React.createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(app.currentUser);
   const realmRef = useRef(null);
-  const [projectData, setProjectData] = useState([]);
 
   useEffect(() => {
     if (!user) {
       return;
     }
 
-    // The current user always has their own project, so we don't need
-    // to wait for the user object to load before displaying that project.
-    const myProject = { name: "My Project", partition: `project=${user.id}` };
-    setProjectData([myProject]);
-
     const config = {
       sync: {
         user,
-        partitionValue: `user=${user.id}`,
+        partitionValue: `user=${user.customData.userId}`,
       },
     };
-
-    // Open a realm with the logged in user's partition value in order
-    // to get the projects that the logged in user is a member of
     Realm.open(config).then((userRealm) => {
       realmRef.current = userRealm;
-      const users = userRealm.objects("User");
-
-      users.addListener(() => {
-        // The user custom data object may not have been loaded on
-        // the server side yet when a user is first registered.
-        if (users.length === 0) {
-          setProjectData([myProject]);
-        } else {
-          const { memberOf } = users[0];
-          setProjectData([...memberOf]);
-        }
-      });
+      const users = userRealm.objects("User");      
+      users.addListener(() => { });
     });
 
     return () => {
-      // cleanup function
       const userRealm = realmRef.current;
       if (userRealm) {
         userRealm.close();
         realmRef.current = null;
-        setProjectData([]); // set project data to an empty array (this prevents the array from staying in state on logout)
       }
     };
   }, [user]);
@@ -85,14 +64,19 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const addFriendByEmail = async(email) => {
+    const result = await user.functions.AddUserAsFriend(user.customData.userId, email);
+    return result;
+  }
+
   return (
     <AuthContext.Provider
       value={{
         signUp,
         signIn,
         signOut,
+        addFriendByEmail,
         user,
-        projectData, // list of projects the user is a memberOf
       }}
     >
       {children}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
+import { View, TextInput, Alert } from "react-native";
 import { useAuth } from "../providers/AuthProvider";
+import LoginButton from "../components/LoginButton";
 import styles from "../stylesheet";
 
 export function WelcomeView({ navigation }) {
@@ -9,16 +10,12 @@ export function WelcomeView({ navigation }) {
   const { user, signUp, signIn } = useAuth();
 
   useEffect(() => {
-    // If there is a user logged in, go to the Projects page.
     if (user != null) {
-      navigation.navigate("Projects");
+      navigation.navigate("Main");
     }
   }, [user]);
 
-  // The onPressSignIn method calls AuthProvider.signIn with the
-  // email/password in state.
   const onPressSignIn = async () => {
-    console.log("Press sign in");
     try {
       await signIn(email, password);
     } catch (error) {
@@ -26,8 +23,6 @@ export function WelcomeView({ navigation }) {
     }
   };
 
-  // The onPressSignUp method calls AuthProvider.signUp with the
-  // email/password in state and then signs in.
   const onPressSignUp = async () => {
     try {
       await signUp(email, password);
@@ -38,8 +33,7 @@ export function WelcomeView({ navigation }) {
   };
 
   return (
-    <View>
-      <Text>Signup or Signin:</Text>
+    <View style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
           onChangeText={setEmail}
@@ -48,8 +42,6 @@ export function WelcomeView({ navigation }) {
           style={styles.inputStyle}
           autoCapitalize="none"
         />
-      </View>
-      <View style={styles.inputContainer}>
         <TextInput
           onChangeText={(text) => setPassword(text)}
           value={password}
@@ -58,8 +50,17 @@ export function WelcomeView({ navigation }) {
           secureTextEntry
         />
       </View>
-      <Button onPress={onPressSignIn} title="Sign In" />
-      <Button onPress={onPressSignUp} title="Sign Up" />
+      <View style={styles.loginButtonBox}>
+        <LoginButton
+          text={"Sign In"}
+          buttonStyle={styles.signInButton}
+          onPress={onPressSignIn} />
+        <LoginButton
+          text={"Sign Up"}
+          buttonStyle={styles.signUpButton}
+          textStyle={styles.signUpButtonText}
+          onPress={onPressSignUp} />
+      </View>
     </View>
   );
 }
