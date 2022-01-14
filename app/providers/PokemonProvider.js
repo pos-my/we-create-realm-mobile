@@ -16,7 +16,7 @@ const PokemonProvider = ({children}) => {
       return;
     }
 
-    const config = {
+    /*const config = {
       sync: {
         user: user,
         partitionValue: 'sync=yes',
@@ -34,7 +34,7 @@ const PokemonProvider = ({children}) => {
       });
     }).catch((err) => {
       console.log("Pokemon sync error", err);
-    });
+    });*/
 
     return () => {
       const projectRealm = realmRef.current;
@@ -47,7 +47,7 @@ const PokemonProvider = ({children}) => {
   }, [user])
 
   const createPokemon = (name, hp, type1, type2) => {
-    const projectRealm = realmRef.current;
+    /*const projectRealm = realmRef.current;
     projectRealm.write(() => {
       projectRealm.create("Pokemon", {
         _id: new ObjectId(),
@@ -57,10 +57,14 @@ const PokemonProvider = ({children}) => {
         type1: type1,
         type2: type2
       })
-    })
+    })*/
   }
 
   const filterByName = (value) => {
+    if (realmRef.current === null) {
+      return [];
+    } 
+
     if (value.trim().length === 0) {
       return pokemonList;
     }
