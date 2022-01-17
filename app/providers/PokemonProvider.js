@@ -16,26 +16,6 @@ const PokemonProvider = ({children}) => {
       return;
     }
 
-    /*const config = {
-      sync: {
-        user: user,
-        partitionValue: 'sync=yes',
-        newRealmFileBehavior: {type: 'downloadBeforeOpen'},
-        existingRealmFileBehavior: {type: 'openImmediately'},
-      },
-    };
-    Realm.open(config).then((projectRealm) => {
-      realmRef.current = projectRealm;
-      const syncPokemon = projectRealm.objects("Pokemon");
-      let sorted = syncPokemon.sorted("name");
-      setPokemonList([...sorted]);
-      sorted.addListener(() => {
-        setPokemonList([...sorted]);
-      });
-    }).catch((err) => {
-      console.log("Pokemon sync error", err);
-    });*/
-
     return () => {
       const projectRealm = realmRef.current;
       if (projectRealm) {
@@ -47,17 +27,8 @@ const PokemonProvider = ({children}) => {
   }, [user])
 
   const createPokemon = (name, hp, type1, type2) => {
-    /*const projectRealm = realmRef.current;
-    projectRealm.write(() => {
-      projectRealm.create("Pokemon", {
-        _id: new ObjectId(),
-        _partition: "sync=yes",
-        name: name,
-        hp: parseInt(hp),
-        type1: type1,
-        type2: type2
-      })
-    })*/
+    const projectRealm = realmRef.current;
+    
   }
 
   const filterByName = (value) => {
