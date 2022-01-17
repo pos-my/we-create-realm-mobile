@@ -2,6 +2,19 @@
 
 Follow along at https://docs.mongodb.com/realm/tutorial/react-native/
 
+## Prerequisite
+
+### Tools
+- [Node JS](https://nodejs.org/en/download/)
+- [Java 11](https://adoptium.net/?variant=openjdk11&jvmVariant=hotspot)
+- [Android SDK](https://developer.android.com/about/versions/12/setup-sdk)
+- [Android SDK Platform](https://developer.android.com/about/versions/12/setup-sdk)
+- Android Virtual Device (AVD)
+- IDE (e.g. [Android Studio](https://developer.android.com/studio))
+
+### Cloud Platform
+- Access to [Mongo Atlas](https://cloud.mongodb.com/)
+
 ## Troubleshooting
 
 The most common issue is schema mismatch due to frequent little tweaks to the
