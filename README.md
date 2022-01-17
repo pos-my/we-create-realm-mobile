@@ -6,6 +6,7 @@ Follow along at https://docs.mongodb.com/realm/tutorial/react-native/
 
 ### Tools
 - [Node JS](https://nodejs.org/en/download/)
+- [react-native npm package](https://www.npmjs.com/package/react-native)
 - [Java 11](https://adoptium.net/?variant=openjdk11&jvmVariant=hotspot)
 - [Android SDK](https://developer.android.com/about/versions/12/setup-sdk)
 - [Android SDK Platform](https://developer.android.com/about/versions/12/setup-sdk)
